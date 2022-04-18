@@ -15,3 +15,8 @@
 - BCryptjs
 - Jsonwebtoken
 - Express Async Errors
+- dotenv
+- TSConfig Paths
+- Jest
+- TS Jest
+- Supertest
