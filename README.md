@@ -20,3 +20,6 @@
 - Jest
 - TS Jest
 - Supertest
+- UUID
+
+## HOW TO USE
