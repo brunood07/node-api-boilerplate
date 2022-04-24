@@ -5,3 +5,7 @@ node_modules
 ## ENVIRONMENT
 
 .env
+
+## PRISMA MIGRATIONS
+
+prisma/migrations
