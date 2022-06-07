@@ -22,9 +22,9 @@ services:
     volumes:
       - .:/usr/app
     links:
-      - app_database
+      - database
     depends_on:
-      - app_database
+      - database
 
 
 

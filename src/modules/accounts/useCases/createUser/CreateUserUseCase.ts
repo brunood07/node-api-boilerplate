@@ -1,28 +1,26 @@
 import { ICreateUserDTO } from "@modules/accounts/dtos/ICreateUserDTO";
+import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
+import { AppError } from "@shared/errors/AppError";
 import { hash } from "bcryptjs";
 
-import { prisma } from "../../../../database/prismaClient";
-
 class CreateUserUseCase {
-  async execute({ username, password }: ICreateUserDTO) {
-    const userExists = await prisma.users.findFirst({
-      where: {
-        username: {
-          equals: username,
-          mode: "insensitive",
-        },
-      },
-    });
+  constructor(private usersRepository: IUsersRepository) {}
 
-    if (userExists) throw new Error("User already exists!");
+  async execute({
+    username,
+    password,
+    email,
+  }: ICreateUserDTO): Promise<ICreateUserDTO> {
+    const userExists = await this.usersRepository.findByEmail(email);
+
+    if (userExists) throw new AppError("User already exists!");
 
     const hashPassword = await hash(password, 10);
 
-    const newUser = await prisma.users.create({
-      data: {
-        username,
-        password: hashPassword,
-      },
+    const newUser = this.usersRepository.create({
+      username,
+      password: hashPassword,
+      email,
     });
 
     return newUser;
